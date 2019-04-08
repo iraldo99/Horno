@@ -17,11 +17,11 @@ public class TemperaturaAmbiente {
 		return super.clone();
 	}
 	
-	public double getTemp() {
+	public double getTemperatura() {
 		return temp;
 	}
 	
-	public void setTemp(double temp) {
+	public void setTemperatura(double temp) {
 		this.temp = temp;
 	}
 	
