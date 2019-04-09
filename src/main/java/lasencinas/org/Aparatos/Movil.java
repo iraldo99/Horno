@@ -6,7 +6,7 @@ import lasencinas.org.Tipos.*;
 public class Movil implements Termometro{
 	
 	public double leer(TemperaturaAmbiente temp) {
-		return 0.0;
+		return temp.getTemperatura();
 	}
 	
 }

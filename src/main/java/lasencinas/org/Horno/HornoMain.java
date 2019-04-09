@@ -1,7 +1,9 @@
 package lasencinas.org.Horno;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
+import lasencinas.org.Aparatos.CalderaGas;
+import lasencinas.org.Interfaces.Regulador;
+import lasencinas.org.Interfaces.Termometro;
+import lasencinas.org.Tipos.TemperaturaAmbiente;
 
 public class HornoMain 
 {
@@ -9,34 +11,19 @@ public class HornoMain
     {
     	final double minTemp = 15.0;
         final double maxTemp = 21.0;
-        // Movemos la creacion e inicializacion del objeto RoomTemperature al module del inyector
-        // RoomTemperature temperature = new RoomTemperature(15);
-
-        /*
-         *  Guice.createInjector() takes your Modules, 
-         *  and returns a new Injector instance.
-         */
-        Injector injector = Guice.createInjector(new RegulatorModule());
-		
-        /*
-         * Now that we've got the injector, we can build objects.
-         * El codigo equivalente es:
-         * Heater heater = new GasHeater();
-         * Thermometer thermometer = new RemoteCommandSensor();
-         * Regulador regulator = new Regulador(Thermometer, GasHeater);
-         */ 
-		Regulador regulador = injector.getInstance(Regulador.class);
-		
-		regulador.setMinTemp(minTemp);
-		regulador.setMaxTemp(maxTemp);
-		// movemos la configuracion del objeto RoomTemperature al module del inyector
-		// mediante un metodo @Provides
-		// regulador.setTemperature(15);
-		
+        
+        TemperaturaAmbiente temperature = TemperaturaAmbiente.getInstance();
+        Heater heater = new GasHeater();
+        Termometro thermometer = new RemoteCommandSensor();
+        
+        Regulador regulator = new Regulador();
+        
         System.out.println( "Arrancando..." );
+        regulator.regulate(thermometer, heater, minTemp, maxTemp, temperature);
         
-		regulador.regulate();        
-        
-        ((Jedi) regulador.getHeater()).speak();
+        CalderaGas yoda = new CalderaGas();
+        System.out.println( "\nArrancando a Yoda: " );
+        regulator.regulate(thermometer, yoda, minTemp, maxTemp, temperature);
+        yoda.speak();
     }
 }
